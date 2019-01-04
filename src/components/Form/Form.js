@@ -1,5 +1,6 @@
 import React from 'react';
 import './Form.css';
+import bondImg from './assets/bond_approve.jpg';
 
 class Form extends React.Component {
   state = {
@@ -17,17 +18,37 @@ class Form extends React.Component {
   };
 
   handleSubmit = event => {
+    const bondUser = { firstname: 'James', lastname: 'Bond', password: '007' };
+
     event.preventDefault();
     if (!this.state.values.firstname) {
       this.setState({ errors: { firstname: 'Нужно указать имя' } });
     }
   };
 
+  handleChange = event => {
+    this.setState({
+      errors: {
+        firstname: '',
+        lastname: '',
+        password: ''
+      }
+    });
+  };
+
   render() {
+    if (this.state.isSubmitted) {
+      return (
+        <div className="app-container">
+          <img alt="" src={bondImg} />
+        </div>
+      );
+    }
     return (
       <div className="app-container">
         <form className="form" onSubmit={this.handleSubmit}>
           <h1>Введите свои данные, агент</h1>
+          {/* Имя */}
           <p className="field">
             <label className="field__label">
               <span className="field-label">Имя</span>
@@ -35,17 +56,46 @@ class Form extends React.Component {
             <input
               className="field__input field-input t-input-firstname"
               value={this.state.values.firstname}
+              onChange={this.handleChange}
             />
-            <span className="field__error field-error t-error--firstname">
+            <span className="field__error field-error t-error-firstname">
               {this.state.errors.firstname}
             </span>
           </p>
-          <div class="form__buttons">
+          {/* Фамилия */}
+          <p className="field">
+            <label className="field__label">
+              <span className="field-label">Фамилия</span>
+            </label>
+            <input
+              className="field__input field-input t-input-lastname"
+              value={this.state.values.lastname}
+              onChange={this.handleChange}
+            />
+            <span className="field__error field-error t-error-lastname">
+              {this.state.errors.lastname}
+            </span>
+          </p>
+          {/* Пароль */}
+          <p className="field">
+            <label className="field__label">
+              <span className="field-label">Пароль</span>
+            </label>
+            <input
+              className="field__input field-input t-input-password"
+              value={this.state.values.password}
+              onChange={this.handleChange}
+            />
+            <span className="field__error field-error t-error-password">
+              {this.state.errors.password}
+            </span>
+          </p>
+          <div className="form__buttons">
             <input
               type="submit"
-              class="button t-submit"
+              className="button t-submit"
               value="Проверить"
-              onSubmit="handleSubmit"
+              onSubmit={this.handleSubmit}
             />
           </div>
         </form>
