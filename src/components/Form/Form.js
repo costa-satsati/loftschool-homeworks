@@ -24,8 +24,12 @@ class Form extends React.Component {
     if (firstname === 'James' && lastname === 'Bond' && password === '007') {
       this.setState({ isSubmitted: true });
     } else {
-      if (!this.state.values.firstname) {
+      if (!firstname) {
         this.setState({ errors: { firstname: 'Нужно указать имя' } });
+      }
+
+      if (firstname !== 'James') {
+        this.setState({ errors: { firstname: 'Имя указано не верно' } });
       }
     }
   };
@@ -49,7 +53,7 @@ class Form extends React.Component {
     if (this.state.isSubmitted) {
       return (
         <div className="app-container">
-          <img alt="" src={bondImg} />
+          <img class="t-bond-image" alt="" src={bondImg} />
         </div>
       );
     }
