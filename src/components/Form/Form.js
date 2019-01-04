@@ -18,22 +18,31 @@ class Form extends React.Component {
   };
 
   handleSubmit = event => {
-    const bondUser = { firstname: 'James', lastname: 'Bond', password: '007' };
+    const { firstname, lastname, password } = this.state.values;
 
     event.preventDefault();
-    if (!this.state.values.firstname) {
-      this.setState({ errors: { firstname: 'Нужно указать имя' } });
+    if (firstname === 'James' && lastname === 'Bond' && password === '007') {
+      this.setState({ isSubmitted: true });
+    } else {
+      if (!this.state.values.firstname) {
+        this.setState({ errors: { firstname: 'Нужно указать имя' } });
+      }
     }
   };
 
   handleChange = event => {
-    this.setState({
+    const { name, value } = event.target;
+    this.setState(state => ({
       errors: {
         firstname: '',
         lastname: '',
         password: ''
+      },
+      values: {
+        ...state.values,
+        [name]: value
       }
-    });
+    }));
   };
 
   render() {
@@ -54,6 +63,7 @@ class Form extends React.Component {
               <span className="field-label">Имя</span>
             </label>
             <input
+              name="firstname"
               className="field__input field-input t-input-firstname"
               value={this.state.values.firstname}
               onChange={this.handleChange}
@@ -68,6 +78,7 @@ class Form extends React.Component {
               <span className="field-label">Фамилия</span>
             </label>
             <input
+              name="lastname"
               className="field__input field-input t-input-lastname"
               value={this.state.values.lastname}
               onChange={this.handleChange}
@@ -82,6 +93,7 @@ class Form extends React.Component {
               <span className="field-label">Пароль</span>
             </label>
             <input
+              name="password"
               className="field__input field-input t-input-password"
               value={this.state.values.password}
               onChange={this.handleChange}
