@@ -21,18 +21,49 @@ class Form extends React.Component {
     const { firstname, lastname, password } = this.state.values;
 
     event.preventDefault();
-    if (firstname === 'James' && lastname === 'Bond' && password === '007') {
+    if (firstname === 'james' && lastname === 'bond' && password === '007') {
       this.setState({ isSubmitted: true });
     } else {
-      if (!firstname) {
-        this.setState({ errors: { firstname: 'Нужно указать имя' } });
-      }
-
-      if (firstname !== 'James') {
-        this.setState({ errors: { firstname: 'Имя указано не верно' } });
-      }
+      const errors = {
+        firstname: this.validateFirstName(firstname),
+        lastname: this.validateLastName(lastname),
+        password: this.validatePassword(password)
+      };
+      this.setState({
+        errors: errors
+      });
     }
   };
+
+  validateFirstName(firstname) {
+    if (!firstname) {
+      return 'Нужно указать имя';
+    } else if (firstname !== 'james') {
+      return 'Имя указано не верно';
+    } else {
+      return '';
+    }
+  }
+
+  validateLastName(lastname) {
+    if (!lastname) {
+      return 'Нужно указать фамилию';
+    } else if (lastname !== 'bond') {
+      return 'Фамилия указана не верно';
+    } else {
+      return '';
+    }
+  }
+
+  validatePassword(password) {
+    if (!password) {
+      return 'Нужно указать пароль';
+    } else if (password !== '007') {
+      return 'Пароль указан не верно';
+    } else {
+      return '';
+    }
+  }
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -53,7 +84,7 @@ class Form extends React.Component {
     if (this.state.isSubmitted) {
       return (
         <div className="app-container">
-          <img class="t-bond-image" alt="" src={bondImg} />
+          <img className="t-bond-image" alt="" src={bondImg} />
         </div>
       );
     }
