@@ -16,19 +16,38 @@ class Form extends React.Component {
     }
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    if (!this.state.values.firstname) {
+      this.setState({ errors: { firstname: 'Нужно указать имя' } });
+    }
+  };
+
   render() {
     return (
       <div className="app-container">
         <form className="form" onSubmit={this.handleSubmit}>
-          <label>
-            Name:
+          <h1>Введите свои данные, агент</h1>
+          <p className="field">
+            <label className="field__label">
+              <span className="field-label">Имя</span>
+            </label>
             <input
-              type="text"
+              className="field__input field-input t-input-firstname"
               value={this.state.values.firstname}
-              onChange={this.handleChange}
             />
-          </label>
-          <input type="submit" value="Submit" />
+            <span className="field__error field-error t-error--firstname">
+              {this.state.errors.firstname}
+            </span>
+          </p>
+          <div class="form__buttons">
+            <input
+              type="submit"
+              class="button t-submit"
+              value="Проверить"
+              onSubmit="handleSubmit"
+            />
+          </div>
         </form>
       </div>
     );
