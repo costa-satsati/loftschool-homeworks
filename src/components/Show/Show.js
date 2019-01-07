@@ -1,6 +1,6 @@
 import React from 'react';
 import './Show.css';
-import {getShowInfo} from 'api'
+import { getShowInfo } from 'api';
 
 class Show extends React.Component {
   state = {
@@ -9,20 +9,33 @@ class Show extends React.Component {
   };
 
   componentDidUpdate() {
-      console.log('Did update');
-      getShowInfo('santaBarbara');
+    console.log('Did update');
+    const { showId } = this.state;
+    //update state's data
+    this.setState({ data: getShowInfo(showId) });
   }
 
-  static getDerivedStateFromProps() {
-    console.log('Derived state from props');
+  static getDerivedStateFromProps(props, state) {
+    console.log('Derived state from props' + props.showId);
 
+    if (props.showId !== state.showId) {
+      return {
+        showId: props.showId
+      };
+    }
+    // Return null to indicate no change to state.
+    return null;
   }
 
   render() {
-    return <div className='show'>
-    Hi
-    <img alt='' className="show-image"/>
-    </div>;
+     const {data} = this.state;
+
+    return (
+      <div className="show">
+        <p>{data.summary}</p>
+        <img alt="" className="show-image" src={data.image.medium}/>
+      </div>
+    );
   }
 }
 
