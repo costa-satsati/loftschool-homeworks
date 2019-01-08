@@ -28,12 +28,13 @@ class Show extends React.Component {
   }
 
   render() {
-     const {data} = this.state;
+    const { data } = this.state;
 
     return (
       <div className="show">
-        <p>{data.summary}</p>
-        <img alt="" className="show-image" src={data.image.medium}/>
+        {data.length > 0 ? (
+          <img alt="" className="show-image" src={data.image.medium} />
+        ) : null}
       </div>
     );
   }
