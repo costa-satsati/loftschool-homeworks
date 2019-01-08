@@ -5,14 +5,18 @@ import { getShowInfo } from 'api';
 class Show extends React.Component {
   state = {
     showId: '',
-    data: []
+    data: null
   };
 
   componentDidUpdate() {
     console.log('Did update');
-    const { showId } = this.state;
+    const { showId, data } = this.state;
     //update state's data
-    this.setState({ data: getShowInfo(showId) });
+    if (data == null && showId !== '') {
+      getShowInfo(showId).then(data => {
+        this.setState({ data });
+      });
+    }
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -20,7 +24,8 @@ class Show extends React.Component {
 
     if (props.showId !== state.showId) {
       return {
-        showId: props.showId
+        showId: props.showId,
+        data: null
       };
     }
     // Return null to indicate no change to state.
@@ -32,9 +37,8 @@ class Show extends React.Component {
 
     return (
       <div className="show">
-        {data.length > 0 ? (
-          <img alt="" className="show-image" src={data.image.medium} />
-        ) : null}
+        {data != null ? decodeURI(data.summary) : ""}
+        <img alt="" className="show-image" src={data != null ? data.image.medium : ""} />
       </div>
     );
   }
