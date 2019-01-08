@@ -37,36 +37,6 @@ class Form extends Component {
     isSubmited: false
   };
 
-  validateFirstName(firstname) {
-    if (!firstname) {
-      return 'Нужно указать имя';
-    } else if (firstname !== 'james') {
-      return 'Имя указано не верно';
-    } else {
-      return '';
-    }
-  }
-
-  validateLastName(lastname) {
-    if (!lastname) {
-      return 'Нужно указать фамилию';
-    } else if (lastname !== 'bond') {
-      return 'Фамилия указана не верно';
-    } else {
-      return '';
-    }
-  }
-
-  validatePassword(password) {
-    if (!password) {
-      return 'Нужно указать пароль';
-    } else if (password !== '007') {
-      return 'Пароль указан не верно';
-    } else {
-      return '';
-    }
-  }
-
   handleChange = event => {
     this.setState({
       values: { ...this.state.values, [event.target.name]: event.target.value },
