@@ -1,121 +1,112 @@
-import React from 'react';
+import React, { Component } from 'react';
+import formValidator from './helpers/formValidator';
 import './Form.css';
-import bondImg from './assets/bond_approve.jpg';
+import checkUser from './helpers/checkUser';
+import BondImage from './assets/bond_approve.jpg';
 
-class Form extends React.Component {
+const fields = [
+  {
+    label: 'Имя',
+    name: 'firstname',
+    inputType: 'text'
+  },
+  {
+    label: 'Фамилия',
+    name: 'lastname',
+    inputType: 'text'
+  },
+  {
+    label: 'Пароль',
+    name: 'password',
+    inputType: 'password'
+  }
+];
+
+class Form extends Component {
   state = {
+    values: {
+      firstname: '',
+      lastname: '',
+      password: ''
+    },
     errors: {
       firstname: '',
       lastname: '',
       password: ''
     },
-    isSubmitted: false,
-    values: {
-      firstname: '',
-      lastname: '',
-      password: ''
-    }
-  };
-
-  handleSubmit = event => {
-    const { firstname, lastname, password } = this.state.values;
-
-    event.preventDefault();
-    if (firstname === 'James' && lastname === 'Bond' && password === '007') {
-      this.setState({ isSubmitted: true });
-    } else {
-      if (!firstname) {
-        this.setState({ errors: { firstname: 'Нужно указать имя' } });
-      }
-
-      if (firstname !== 'James') {
-        this.setState({ errors: { firstname: 'Имя указано не верно' } });
-      }
-    }
+    isSubmited: false
   };
 
   handleChange = event => {
-    const { name, value } = event.target;
-    this.setState(state => ({
+    this.setState({
+      values: { ...this.state.values, [event.target.name]: event.target.value },
       errors: {
         firstname: '',
         lastname: '',
         password: ''
-      },
-      values: {
-        ...state.values,
-        [name]: value
       }
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const { values } = this.state;
+    const errors = formValidator(values);
+    const { isSubmited, errors: userErrors } = checkUser(values);
+
+    this.setState(state => ({
+      errors: { ...state.errors, ...userErrors },
+      isSubmited
+    }));
+
+    this.setState(state => ({
+      errors: { ...state.errors, ...errors }
     }));
   };
 
   render() {
-    if (this.state.isSubmitted) {
-      return (
-        <div className="app-container">
-          <img class="t-bond-image" alt="" src={bondImg} />
-        </div>
-      );
-    }
+    const { isSubmited } = this.state;
     return (
       <div className="app-container">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <h1>Введите свои данные, агент</h1>
-          {/* Имя */}
-          <p className="field">
-            <label className="field__label">
-              <span className="field-label">Имя</span>
-            </label>
-            <input
-              name="firstname"
-              className="field__input field-input t-input-firstname"
-              value={this.state.values.firstname}
-              onChange={this.handleChange}
-            />
-            <span className="field__error field-error t-error-firstname">
-              {this.state.errors.firstname}
-            </span>
-          </p>
-          {/* Фамилия */}
-          <p className="field">
-            <label className="field__label">
-              <span className="field-label">Фамилия</span>
-            </label>
-            <input
-              name="lastname"
-              className="field__input field-input t-input-lastname"
-              value={this.state.values.lastname}
-              onChange={this.handleChange}
-            />
-            <span className="field__error field-error t-error-lastname">
-              {this.state.errors.lastname}
-            </span>
-          </p>
-          {/* Пароль */}
-          <p className="field">
-            <label className="field__label">
-              <span className="field-label">Пароль</span>
-            </label>
-            <input
-              name="password"
-              className="field__input field-input t-input-password"
-              value={this.state.values.password}
-              onChange={this.handleChange}
-            />
-            <span className="field__error field-error t-error-password">
-              {this.state.errors.password}
-            </span>
-          </p>
-          <div className="form__buttons">
-            <input
-              type="submit"
-              className="button t-submit"
-              value="Проверить"
-              onSubmit={this.handleSubmit}
-            />
-          </div>
-        </form>
+        {isSubmited ? this.renderAnswer() : this.renderForm()}
       </div>
+    );
+  }
+
+  renderAnswer() {
+    return <img src={BondImage} alt="bond approve" className='t-bond-image' />;
+  }
+
+  renderForm() {
+    const { values, errors } = this.state;
+
+    return (
+      <form className="form" onSubmit={this.handleSubmit}>
+        <h1>Введите свои данные, агент</h1>
+
+        {fields.map(({ name, label, inputType }) => (
+          <p key={name} className="field">
+            <label className="field__label" htmlFor={name}>
+              <span className="field-label">{label}</span>
+            </label>
+            <input
+              value={values[name]}
+              onChange={this.handleChange}
+              className={`field__input field-input t-input-${name}`}
+              type={inputType}
+              name={name}
+            />
+            <span className={`field__error field-error t-error-${name}`}>
+              {errors[name]}
+            </span>
+          </p>
+        ))}
+
+        <div className="form__buttons">
+          <input type="submit" className="button t-submit" value="Проверить" />
+        </div>
+      </form>
     );
   }
 }
