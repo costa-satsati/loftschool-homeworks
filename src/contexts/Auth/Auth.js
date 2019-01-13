@@ -11,10 +11,10 @@ class AuthProvider extends PureComponent {
   state = {
     email: '',
     authorizeError: '',
-    isAuthorized: true
+    isAuthorized: false
   };
 
-  authorize(email, password) {
+  authorize = (email, password) => {
     if (
       this.validUser.email !== email ||
       this.validUser.password !== password
