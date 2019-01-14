@@ -37,7 +37,7 @@ class Show extends React.Component {
 
     return (
       <div className="show">
-        {data != null ? decodeURI(data.summary) : ""}
+        <div dangerouslySetInnerHTML={data != null ? {__html: data.summary} : null}></div>
         <img alt="" className="show-image" src={data != null ? data.image.medium : ""} />
       </div>
     );
