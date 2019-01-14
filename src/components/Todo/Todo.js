@@ -14,13 +14,23 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = event => {
+    this.setState({inputValue: event.target.value});
+  };
 
   createNewRecordByEnter = event => {};
 
   toggleRecordComplete = event => {};
 
-  createNewRecord = () => {};
+  createNewRecord = () => {
+    const { savedData, saveData } = this.props;
+    const { inputValue } = this.state;
+    const newRecord = {id: this.getId(), isComplete: false, text: inputValue};
+    // save new record to localStorage
+    saveData(savedData.concat(newRecord));
+    //clear session 
+    this.setState({inputValue: ''});
+  };
 
   render() {
     //const { savedData } = this.props;
@@ -35,7 +45,7 @@ class Todo extends PureComponent {
               onKeyPress={this.createNewRecordByEnter}
               value={inputValue}
             />
-            <span class="plus t-plus">+</span>
+            <span className="plus t-plus" onClick={this.createNewRecord}>+</span>
           </div>
         </div>
       </Card>
