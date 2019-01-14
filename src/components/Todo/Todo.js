@@ -23,7 +23,11 @@ class Todo extends PureComponent {
   createNewRecord = () => {};
 
   render() {
-    return;
+    return (
+      <Card title="Список дел">
+      
+      </Card>  
+    );
   }
 
   renderEmptyRecord() {
