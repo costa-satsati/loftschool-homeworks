@@ -23,10 +23,22 @@ class Todo extends PureComponent {
   createNewRecord = () => {};
 
   render() {
+    //const { savedData } = this.props;
+    const { inputValue } = this.state;
     return (
       <Card title="Список дел">
-      
-      </Card>  
+        <div class="todo t-todo-list">
+          <div class="todo-item todo-item-new">
+            <input
+              className="todo-input t-input"
+              onChange={this.handleChange}
+              onKeyPress={this.createNewRecordByEnter}
+              value={inputValue}
+            />
+            <span class="plus t-plus">+</span>
+          </div>
+        </div>
+      </Card>
     );
   }
 
