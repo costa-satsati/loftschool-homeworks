@@ -9,9 +9,13 @@ class Layout extends PureComponent {
       <Fragment>
         {header && this.renderHeader(header)}
 
-        <main className="main">
-        <SectionTitle className="main__title">Main</SectionTitle>
-        {children}
+        <main
+          className={`main ${header ? 'main--with-header' : ''} ${
+            footer ? 'main--with-footer' : ''
+          }`}
+        >
+          <SectionTitle className="main__title">Main</SectionTitle>
+          {children}
         </main>
 
         {footer && this.renderFooter(footer)}
