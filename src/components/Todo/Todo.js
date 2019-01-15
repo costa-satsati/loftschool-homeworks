@@ -54,9 +54,40 @@ class Todo extends PureComponent {
     }
   };
 
-  renderTodoList = () => {
+  render() {
     const { savedData } = this.props;
-    return savedData.map(({ id, isComplete, text }) => (
+
+    return (
+      <Card title="Task List">
+        <div className="todo t-todo-list">
+          {this.renderEmptyRecord()}
+          {savedData.map(record => this.renderRecord(record))}
+        </div>
+      </Card>
+    );
+  }
+
+  renderEmptyRecord() {
+    const { inputValue } = this.state;
+    return (
+      <div className="todo-item todo-item-new">
+        <input
+          className="todo-input t-input"
+          placeholder="Enter task"
+          onChange={this.handleChange}
+          onKeyPress={this.createNewRecordByEnter}
+          value={inputValue}
+        />
+        <span className="plus t-plus" onClick={this.createNewRecord}>
+          +
+        </span>
+      </div>
+    );
+  }
+
+  renderRecord = record => {
+    const { id, isComplete, text } = record;
+    return (
       <div key={id} className="todo-item t-todo">
         <p className="todo-item__text">{text}</p>
         <span
@@ -67,39 +98,7 @@ class Todo extends PureComponent {
           {isComplete ? '[x]' : '[]'}
         </span>
       </div>
-    ));
-  };
-
-  render() {
-    //const { savedData } = this.props;
-    const { inputValue } = this.state;
-    return (
-      <Card title="Task List">
-        <div className="todo t-todo-list">
-          <div className="todo-item todo-item-new">
-            <input
-              className="todo-input t-input"
-              placeholder="Enter task"
-              onChange={this.handleChange}
-              onKeyPress={this.createNewRecordByEnter}
-              value={inputValue}
-            />
-            <span className="plus t-plus" onClick={this.createNewRecord}>
-              +
-            </span>
-          </div>
-          {this.renderTodoList()}
-        </div>
-      </Card>
     );
-  }
-
-  renderEmptyRecord() {
-    return;
-  }
-
-  renderRecord = record => {
-    return;
   };
 }
 
