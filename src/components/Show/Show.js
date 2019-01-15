@@ -9,7 +9,6 @@ class Show extends React.Component {
   };
 
   componentDidUpdate() {
-    console.log('Did update');
     const { showId, data } = this.state;
     //update state's data
     if (data == null && showId !== '') {
@@ -20,8 +19,6 @@ class Show extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log('Derived state from props' + props.showId);
-
     if (props.showId !== state.showId) {
       return {
         showId: props.showId,
@@ -38,18 +35,19 @@ class Show extends React.Component {
       return (
         <div className="show">
           <img alt={data.name} className="show-image" src={data.image.medium} />
-          <h2 class="show-label t-show-name">{data.name}</h2>
-          <p class="show-text t-show-genre">
+          <h2 className="show-label t-show-name">{data.name}</h2>
+          <p className="show-text t-show-genre">
             <b>Жанр: </b>
             {data.genres.toString()}
           </p>
-          <p class="show-text t-show-summary">
-            <div dangerouslySetInnerHTML={{ __html: data.summary }} />
-          </p>
+          <p
+            className="show-text t-show-summary"
+            dangerouslySetInnerHTML={{ __html: data.summary }}
+          />
         </div>
       );
     } else {
-      return <p class="show-inforation t-show-info">Шоу не выбрано</p>;
+      return <p className="show-inforation t-show-info">Шоу не выбрано</p>;
     }
   }
 }
