@@ -34,13 +34,23 @@ class Show extends React.Component {
 
   render() {
     const { data } = this.state;
-
-    return (
-      <div className="show">
-        <div dangerouslySetInnerHTML={data != null ? {__html: data.summary} : null}></div>
-        <img alt="" className="show-image" src={data != null ? data.image.medium : ""} />
-      </div>
-    );
+    if (data != null) {
+      return (
+        <div className="show">
+          <img alt={data.name} className="show-image" src={data.image.medium} />
+          <h2 class="show-label t-show-name">{data.name}</h2>
+          <p class="show-text t-show-genre">
+            <b>Жанр: </b>
+            {data.genres.toString()}
+          </p>
+          <p class="show-text t-show-summary">
+            <div dangerouslySetInnerHTML={{ __html: data.summary }} />
+          </p>
+        </div>
+      );
+    } else {
+      return <p class="show-inforation t-show-info">Шоу не выбрано</p>;
+    }
   }
 }
 
