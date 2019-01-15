@@ -15,38 +15,80 @@ class Todo extends PureComponent {
   }
 
   handleChange = event => {
-    this.setState({inputValue: event.target.value});
+    this.setState({ inputValue: event.target.value });
   };
 
-  createNewRecordByEnter = event => {};
+  createNewRecordByEnter = event => {
+    if (event.key === 'Enter') {
+      this.createNewRecord();
+    }
+  };
 
-  toggleRecordComplete = event => {};
+  toggleRecordComplete = event => {
+    const { savedData, saveData } = this.props;
+    const id = +event.target.dataset.todoId;
+    const updatedArr = savedData.map(item => {
+      if (item.id === id) {
+        item.isComplete = !item.isComplete;
+      }
+      return item;
+    });
+    // resave
+    saveData(updatedArr);
+  };
 
   createNewRecord = () => {
     const { savedData, saveData } = this.props;
     const { inputValue } = this.state;
-    const newRecord = {id: this.getId(), isComplete: false, text: inputValue};
-    // save new record to localStorage
-    saveData(savedData.concat(newRecord));
-    //clear session 
-    this.setState({inputValue: ''});
+
+    if (inputValue) {
+      const newRecord = {
+        id: this.getId(),
+        isComplete: false,
+        text: inputValue
+      };
+      // save new record to localStorage
+      saveData(savedData.concat(newRecord));
+      //clear session
+      this.setState({ inputValue: '' });
+    }
+  };
+
+  renderTodoList = () => {
+    const { savedData } = this.props;
+    return savedData.map(({ id, isComplete, text }) => (
+      <div key={id} className="todo-item t-todo">
+        <p className="todo-item__text">{text}</p>
+        <span
+          className="todo-item__flag t-todo-complete-flag"
+          onClick={this.toggleRecordComplete}
+          data-todo-id={id}
+        >
+          {isComplete ? '[x]' : '[]'}
+        </span>
+      </div>
+    ));
   };
 
   render() {
     //const { savedData } = this.props;
     const { inputValue } = this.state;
     return (
-      <Card title="Список дел">
-        <div class="todo t-todo-list">
-          <div class="todo-item todo-item-new">
+      <Card title="Task List">
+        <div className="todo t-todo-list">
+          <div className="todo-item todo-item-new">
             <input
               className="todo-input t-input"
+              placeholder="Enter task"
               onChange={this.handleChange}
               onKeyPress={this.createNewRecordByEnter}
               value={inputValue}
             />
-            <span className="plus t-plus" onClick={this.createNewRecord}>+</span>
+            <span className="plus t-plus" onClick={this.createNewRecord}>
+              +
+            </span>
           </div>
+          {this.renderTodoList()}
         </div>
       </Card>
     );
