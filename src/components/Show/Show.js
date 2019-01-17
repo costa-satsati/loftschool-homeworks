@@ -9,14 +9,12 @@ class Show extends React.Component {
   };
 
   componentDidMount() {
-    let { data } = this.state;
-    const { showId: updatedShowId } = this.props;  
-    data = null;
-    
+    const { showId } = this.props;
+
     //update state's data
-    if (data == null && updatedShowId !== '') {
-      getShowInfo(updatedShowId).then(data => {
-        this.setState({ data });
+    if (showId !== '') {
+      getShowInfo(showId).then(data => {
+        this.setState({ data, showId });
       });
     }
   }
