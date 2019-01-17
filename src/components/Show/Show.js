@@ -8,15 +8,13 @@ class Show extends React.Component {
     data: null
   };
 
-  componentDidUpdate() {
-    let { showId, data } = this.state;
-    const { showId: updatedShowId } = this.props;
-    if (updatedShowId !== showId) {
-      showId = updatedShowId;
-      data = null;
-    }
+  componentDidUpdate(prevProps) {
+    let { showId } = this.props;
+   
     //update state's data
-    if (data == null && showId !== '') {
+    if (prevProps.showId !== showId) {
+      this.setState({ showId: showId, data: null });
+
       getShowInfo(showId).then(data => {
         this.setState({ data });
       });
