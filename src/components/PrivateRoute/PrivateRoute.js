@@ -9,7 +9,7 @@ class PrivateRoute extends Component {
     return isAuthorized === true ? (
       <RouteComponent {...routeProps} />
     ) : (
-      <Redirect to="/" />
+      <Redirect to="/login" />
     );
   };
 
