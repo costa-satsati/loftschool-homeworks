@@ -11,31 +11,31 @@ class LoginForm extends PureComponent {
   render() {
     return (
       <div className={styles.bg}>
-        <div className="LoginForm_form__3dFfv t-form">
+        <div className={`${styles.form} t-form`}>
           <p>
             <label for="email">
-              <span className="LoginForm_labelText__1L1gb">Почта</span>
+              <span className={styles.labelText}>Почта</span>
             </label>
             <input
               type="text"
               name="email"
-              className="LoginForm_input__18lH8 t-input-email"
+              className={`${styles.input} t-input-email`}
               value=""
             />
           </p>
           <p>
             <label for="password">
-              <span className="LoginForm_labelText__1L1gb">Пароль</span>
+              <span className={styles.labelText}>Пароль</span>
             </label>
             <input
               type="password"
               name="password"
-              className="LoginForm_input__18lH8 t-input-password"
+              className={`${styles.input} t-input-password`}
               value=""
             />
           </p>
-          <div className="LoginForm_buttons__67s-u">
-            <button className="LoginForm_button__2irSw t-login">Войти</button>
+          <div className={styles.buttons}>
+            <button className={`${styles.button} t-login`}>Войти</button>
           </div>
         </div>
       </div>
