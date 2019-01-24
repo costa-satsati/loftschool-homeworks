@@ -11,7 +11,6 @@
 // используйте стили из AppRouter.module.css
 import React, { PureComponent } from 'react';
 import styles from './AppRouter.module.css';
-import { withAuth } from '../../context/Auth';
 
 class AppRouter extends PureComponent {
     render() {
@@ -23,5 +22,5 @@ class AppRouter extends PureComponent {
     }
   }
   
-  export default withAuth(AppRouter);
+  export default AppRouter;
   
