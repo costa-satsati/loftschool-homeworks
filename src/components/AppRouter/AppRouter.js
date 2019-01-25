@@ -17,36 +17,41 @@ import InboxList from '../InboxList';
 import OutboxList from '../OutboxList';
 
 class AppRouter extends PureComponent {
+  
+  renderNav = (match) =>  (
+    <nav className={styles.nav}>
+    <ul className={`${styles.navList} t-nav-list`}>
+      <li className={styles.navElement}>
+        <NavLink to="/app" title="Home" className={`${styles.link} t-link-home`}>
+          Home
+        </NavLink>
+      </li>
+      <li className={styles.navElement}>
+        <NavLink 
+          to={`${match.url}/inbox`}
+          className={`${styles.link} t-link-inbox`}
+        >
+          Inbox
+        </NavLink>
+      </li>
+      <li className={styles.navElement}>
+        <NavLink
+          to={`${match.url}/outbox`}
+          className={`${styles.link} t-link-outbox`}
+        >
+          Outbox
+        </NavLink>
+      </li>
+    </ul>
+  </nav>
+  );
+
   render() {
     const { match } = this.props;
     return (
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          <nav className={styles.nav}>
-            <ul className={`${styles.navList} t-nav-list`}>
-              <li className={styles.navElement}>
-                <NavLink to="/app" title="Home" className={`${styles.link} t-link-home`}>
-                  Home
-                </NavLink>
-              </li>
-              <li className={styles.navElement}>
-                <NavLink 
-                  to={`${match.url}/inbox`}
-                  className={`${styles.link} t-link-inbox`}
-                >
-                  Inbox
-                </NavLink>
-              </li>
-              <li className={styles.navElement}>
-                <NavLink
-                  to={`${match.url}/outbox`}
-                  className={`${styles.link} t-link-outbox`}
-                >
-                  Outbox
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
+          {this.renderNav(match)}
           <div className={styles.content}>
             <h3 className={styles.title}>{match.params.title}</h3>
             <Route path="/app" exact component={Home} />
