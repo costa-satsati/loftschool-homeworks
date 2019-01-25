@@ -2,7 +2,7 @@
 // какие классы должен использовать компонент.
 
 import React, { PureComponent } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './MailList.module.css';
 
 class MailList extends PureComponent {
@@ -11,7 +11,7 @@ class MailList extends PureComponent {
     return (      
         <div className={styles.container}>
           {mail.map(message => {
-            return <Link key={message.id} to={`${match.url}/${message.id}`}>{message.body.substring(0,45)}</Link>
+            return <Link className={styles.link} key={message.id} to={`${match.url}/${message.id}`}>{message.body.substring(0,45)}</Link>
           })}
         </div>     
     );

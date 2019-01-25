@@ -1,20 +1,12 @@
-// Реализуйте роутер приложения.
-// Здесь должны быть обьявлены роуты,
-// которые будут доступны авторизованному пользователю.
-// - Home
-// - InboxList
-// - InboxMail
-// - OutboxList
-// - OutboxMail
 
-// Так же в этом файле обьявите лейаут,
-// используйте стили из AppRouter.module.css
 import React, { PureComponent } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import styles from './AppRouter.module.css';
 import Home from '../Home';
 import InboxList from '../InboxList';
 import OutboxList from '../OutboxList';
+import InboxMail from '../InboxMail';
+import OutboxMail from '../OutboxMail';
 
 class AppRouter extends PureComponent {
   
@@ -55,8 +47,10 @@ class AppRouter extends PureComponent {
           <div className={styles.content}>
             <h3 className={styles.title}>{match.params.title}</h3>
             <Route path="/app" exact component={Home} />
-            <Route path={`${match.path}/inbox`} component={InboxList} />
-            <Route path={`${match.path}/outbox`} component={OutboxList} />
+            <Route path={`${match.path}/inbox`} exact component={InboxList} />
+            <Route path={`${match.path}/inbox/:id`} component={InboxMail} />
+            <Route path={`${match.path}/outbox`} exact component={OutboxList} />
+            <Route path={`${match.path}/outbox/:id`} component={OutboxMail} />
           </div>          
         </div>
       </div>
