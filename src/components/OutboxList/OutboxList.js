@@ -6,15 +6,17 @@
 
 import React, { PureComponent } from 'react';
 import { withData } from '../../context/Data';
+import MailList from '../MailList';
 
 class OutboxList extends PureComponent {
   render() {
+    const {data, ...rest} = this.props;
     return (
       <div >
-        Outbox List
+       <MailList mail={data.outbox} {...rest} />
       </div>
     );
   }
 }
 
-export default OutboxList;
+export default withData(OutboxList);

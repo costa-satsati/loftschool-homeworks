@@ -7,10 +7,13 @@ import styles from './MailList.module.css';
 
 class MailList extends PureComponent {
   render() {
-    return (
-      <div>
-       Mail List
-      </div>
+     const {mail, match} = this.props;
+    return (      
+        <div className={styles.container}>
+          {mail.map(message => {
+            return <Link key={message.id} to={`${match.url}/${message.id}`}>{message.body.substring(0,45)}</Link>
+          })}
+        </div>     
     );
   }
 }

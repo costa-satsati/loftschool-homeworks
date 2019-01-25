@@ -10,10 +10,10 @@ import MailList from '../MailList';
 
 class InboxList extends PureComponent {
   render() {
-      const {data} = this.props;
+      const {data, ...rest} = this.props;
     return (
       <div >
-       <MailList/>
+       <MailList mail={data.inbox} {...rest} />
       </div>
     );
   }
