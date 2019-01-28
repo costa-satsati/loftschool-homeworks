@@ -13,7 +13,7 @@ class OutboxList extends PureComponent {
     const {data, ...rest} = this.props;
     return (
       <div >
-       <MailList mail={data.outbox} {...rest} />
+       <MailList mail={data.outbox} mailType="outbox" {...rest} />
       </div>
     );
   }

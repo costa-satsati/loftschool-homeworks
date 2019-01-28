@@ -13,7 +13,7 @@ class InboxList extends PureComponent {
       const {data, ...rest} = this.props;
     return (
       <div >
-       <MailList mail={data.inbox} {...rest} />
+       <MailList mail={data.inbox} mailType="inbox" {...rest} />
       </div>
     );
   }
